@@ -4,13 +4,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Repository
 public class MovieRepository {
 
     HashMap<String, Movie> movieDatabase = new HashMap<>();
     HashMap<String, Director> directorDatabase = new HashMap<>();
-    HashMap<String, ArrayList<String>> directorMovie = new HashMap<>();
+    HashMap<String, List<String>> directorMovie = new HashMap<>();
 
     public void addMovie(Movie movie){
         movieDatabase.put(movie.getName(), movie);
@@ -21,7 +22,7 @@ public class MovieRepository {
     }
 
     public void addMovieDirectorPair(String movie, String director){
-        ArrayList<String> listOfMovie = new ArrayList<>();
+        List<String> listOfMovie = new ArrayList<>();
 
         if(directorMovie.containsKey(director)){
             listOfMovie = directorMovie.get(director);
@@ -39,13 +40,13 @@ public class MovieRepository {
         return directorDatabase.get(director);
     }
 
-    public ArrayList<String> getMoviesByDirectorName(String director){
+    public List<String> getMoviesByDirectorName(String director){
         return directorMovie.get(director);
     }
 
-    public ArrayList<String> findAllMovies(){
+    public List<String> findAllMovies(){
 
-        ArrayList<String> allMovie = new ArrayList<>();
+        List<String> allMovie = new ArrayList<>();
         for(String movie : movieDatabase.keySet()){
             allMovie.add(movie);
         }
@@ -54,7 +55,7 @@ public class MovieRepository {
 
     public void deleteDirectorByName(String director){
         directorDatabase.remove(director);
-        ArrayList<String> movies = directorMovie.get(director);
+        List<String> movies = directorMovie.get(director);
         for(String movie : movies){
             movieDatabase.remove(movie);
         }
@@ -64,7 +65,7 @@ public class MovieRepository {
     public void deleteAllDirectors(){
         directorDatabase.clear();
         for(String director : directorMovie.keySet()){
-            ArrayList<String> movies = directorMovie.get(director);
+            List<String> movies = directorMovie.get(director);
             for(String movie : movies){
                 movieDatabase.remove(movie);
             }
